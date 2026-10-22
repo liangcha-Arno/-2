@@ -149,6 +149,7 @@ def get_dirs_to_initialize() -> list[Path]:
         #   PRETRAINED_MODELS_DIR  : 预训练权重(下载来的输入,很大,重下载耗时)
         #   CONFIGS_DIR / UNIT_TEST_DIR / SCRIPTS_DIR / DOCS_DIR : 都进 git
         META_LOGGING_DIR,  # 工具元数据(reset 等元工具的审计日志位置)
+        DATASET_CONFIGS_DIR,
     ]
 
 # ============================================================
@@ -209,3 +210,14 @@ if __name__ == "__main__":
     print(f"\n要初始化的目录共 {len(get_dirs_to_initialize())} 个:")
     for d in get_dirs_to_initialize():
         print(f"  - {d.relative_to(ROOT_DIR)}")
+
+DATASET_CONFIGS_DIR: Path = CONFIGS_DIR / "datasets"   # 数据集 yaml 的家(Ultralytics 约定)
+
+def raw_dataset_root(name: str) -> Path:
+    return RAW_DATA_DIR / name
+
+def dataset_processed_dir(name: str) -> Path:
+    return PROCESSED_DATA_DIR / name
+
+def dataset_yaml_path(name: str) -> Path:
+    return DATASET_CONFIGS_DIR / f"{name}.yaml"
