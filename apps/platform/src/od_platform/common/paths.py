@@ -152,6 +152,8 @@ def get_dirs_to_initialize() -> list[Path]:
         DATASET_CONFIGS_DIR,
     ]
 
+
+
 # ============================================================
 # 【绝对保护目录】reset 工具永远不能删除这些
 # ============================================================
@@ -221,3 +223,9 @@ def dataset_processed_dir(name: str) -> Path:
 
 def dataset_yaml_path(name: str) -> Path:
     return DATASET_CONFIGS_DIR / f"{name}.yaml"
+
+VALIDATION_RUNS_DIR: Path = RUNS_DIR / "data_validation"   # 质检报告的家(按需创建,不进 init 清单)
+
+
+def validation_run_dir(run_id: str) -> Path:
+    return VALIDATION_RUNS_DIR / run_id
