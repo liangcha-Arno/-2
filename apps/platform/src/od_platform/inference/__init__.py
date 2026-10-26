@@ -1,10 +1,10 @@
-# apps/platform/src/odp_platform/inference/__init__.py
+# apps/platform/src/od_platform/inference/__init__.py
 """ODPlatform 推理子系统对外面板.
 
 业务方按需引入:
-    from odp_platform.inference import infer_yolo                       # 一行启动
-    from odp_platform.inference import InferService, InferResult, InferStats
-    from odp_platform.inference import (
+    from od_platform.inference import infer_yolo                       # 一行启动
+    from od_platform.inference import InferService, InferResult, InferStats
+    from od_platform.inference import (
         OutputSink, LocalFileSink, NullSink,                            # 接缝 1
         InferHooks, FrameEvent, ProgressEvent,                          # 接缝 2
         CancelToken, InferenceCancelled,                                # 接缝 3
