@@ -7,9 +7,9 @@ from __future__ import annotations
 from pathlib import Path
 
 from od_platform.common.paths import (
+    DATASET_CONFIGS_DIR,
     MODELS_DIR,
     PROCESSED_DATA_DIR,
-    RAW_DATA_DIR,
 )
 
 
@@ -24,10 +24,13 @@ def resolve_ref(ref: str, *, base_dir: Path,
     return (base_dir / p).resolve()
 
 
-def resolve_dataset(ref: str) -> Path:
-    """'demo' → <repo>/data/raw/demo;也可传显式路径。"""
-    return resolve_ref(ref, base_dir=RAW_DATA_DIR)
+def resolve_dataset_yaml(ref: str) -> Path:
+    """'demo' → <repo>/configs/datasets/demo.yaml;也可传显式路径。
 
+    与 paths.dataset_yaml_path 同一落点(odp-transform 的产出位置),
+    供 odp-train / 数据身份对账按名字找回数据集 yaml。
+    """
+    return resolve_ref(ref, base_dir=DATASET_CONFIGS_DIR, default_suffix=".yaml")
 
 def resolve_yaml(ref: str) -> Path:
     """'demo' → <repo>/data/processed/demo.yaml;也可传显式路径。"""
