@@ -29,7 +29,7 @@ import time
 from queue import Empty, Full, Queue
 from threading import Event, Lock, Thread
 
-from odp_platform.frame_source import create_frame_source  # type: ignore
+from od_platform.frame_source import create_frame_source  # type: ignore
 
 from .cancel import CancelToken
 from .hooks import FrameEvent, InferHooks, ProgressEvent
