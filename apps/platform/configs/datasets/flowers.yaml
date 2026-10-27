@@ -1,0 +1,41 @@
+path: C:/Users/liangcha/ODPlatform/data/processed/flowers
+train: images/train
+val: images/val
+test: images/test
+names:
+  0: carnation
+  1: chrysanthemum
+  2: daffodil
+  3: daisy
+  4: hydrangea
+  5: iris
+  6: jasmine
+  7: lotus
+  8: orchid
+  9: peony
+  10: primrose
+  11: rose
+  12: sunflower
+  13: tulip
+  14: zinna
+nc: 15
+odp_meta:
+  schema_version: 1
+  dataset_name: flowers
+  source_format: pascal_voc
+  task: detect
+  tool_version: odp-transform/0.4
+  created_at: '2026-10-27T09:40:13'
+  contract_fingerprint: 354b566a6f2e7bb7cd1d612e1b4ee6b55b548c98be2eaf7dc12df8960bbdf5ef
+  manifest_path: runs/data_pipeline/20261027-094013/manifest.json
+  split:
+    strategy: stratified_multilabel
+    seed: 42
+    rates:
+      train: 0.8
+      val: 0.1
+      test: 0.1
+    counts:
+      train: 2755
+      val: 345
+      test: 343

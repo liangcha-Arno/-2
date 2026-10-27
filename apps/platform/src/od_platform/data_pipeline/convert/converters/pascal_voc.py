@@ -5,6 +5,8 @@
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+from tqdm import tqdm
+
 from od_platform.common.constants import AnnotationFormat, Task
 from od_platform.data_pipeline.convert.converters._geometry import normalize_box
 from od_platform.data_pipeline.convert.registry import ConvertOptions, register_converter
@@ -28,7 +30,7 @@ def convert_pascal_voc(input_dir: Path, output_labels_dir: Path,
         classes = list(options.classes)
     class_to_idx = {n: i for i, n in enumerate(classes)}
 
-    for xf in xml_files:
+    for xf in tqdm(xml_files, desc="转换 Pascal VOC 标注", unit="file"):
         root = ET.parse(xf).getroot()
         size = root.find("size")
         W = float(size.findtext("width"))

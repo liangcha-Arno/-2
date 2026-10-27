@@ -13,6 +13,8 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+from tqdm import tqdm
+
 from od_platform.common import paths
 from od_platform.common.lineage import SplitManifest
 
@@ -95,7 +97,7 @@ def materialize(manifest: SplitManifest, source: SplitSourceDirs,
     counts: dict[str, int] = {}
     for split in _SPLITS:
         stems = manifest.stems_of(split)
-        for stem in stems:
+        for stem in tqdm(stems, desc=f"物化 {split} 集", unit="img"):
             img, lbl = source.resolve(stem)
             _copy_pair(img, lbl, out, split)
         counts[split] = len(stems)

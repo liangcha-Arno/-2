@@ -27,7 +27,7 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 
 import numpy as np
-from odp_platform.frame_source import SourceType
+from od_platform.frame_source import SourceType
 
 logger = logging.getLogger(__name__)
 

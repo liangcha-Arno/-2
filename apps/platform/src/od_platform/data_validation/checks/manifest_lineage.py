@@ -6,6 +6,8 @@ from __future__ import annotations
 import hashlib
 from pathlib import Path
 
+from tqdm import tqdm
+
 from od_platform.common.constants import LINEAGE_MAX_DETAIL
 from od_platform.data_validation.checks._lineage import load_manifest_from_yaml
 from od_platform.data_validation.registry import (
@@ -40,7 +42,7 @@ def validate_manifest_lineage(ctx: CheckContext) -> CheckResult:
     changed: list[str] = []
     moved: list[dict] = []
     missing: list[str] = []
-    for s in manifest.samples:
+    for s in tqdm(manifest.samples, desc="核验契约一致性", unit="file", leave=False):
         lbl = disk.get((s.split, s.stem))
         if lbl is None:
             elsewhere = disk_splits_of_stem.get(s.stem)

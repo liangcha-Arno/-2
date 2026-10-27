@@ -67,6 +67,7 @@ RUNS_DIR: Path = ROOT_DIR / "runs"
 # 模型子目录
 PRETRAINED_MODELS_DIR: Path = MODELS_DIR / "pretrained"  # 下载的预训练权重(输入)
 TRAINED_MODELS_DIR: Path = MODELS_DIR / "trained"        # 训练产出、长期保留的权重(产物)
+CHECKPOINTS_DIR: Path = MODELS_DIR / "checkpoints"       # 训练过程中的检查点(断点续训用)
 
 # 数据集子目录
 # 设计依据见 D0 决定 5:原始(只读)与派生(可再生)分家。
@@ -255,3 +256,27 @@ def runtime_config_path(name: str) -> Path:
         # → <APP_DIR>/configs/runtime/train.yaml
     """
     return RUNTIME_CONFIGS_DIR / f"{name}.yaml"
+
+# ============================================================
+# D8 增量: 模型路径解析工具 (解决 resolve_model_path 缺失)
+# ============================================================
+
+
+def resolve_model_path(model_ref: str, search_dirs: list[Path] | None = None) -> Path:
+    """解析模型路径:支持绝对路径,或去指定目录里找。
+    如果都找不到,就直接返回原始字符串路径(让 ultralytics 自动下载)。
+    """
+    p = Path(model_ref)
+    # 如果是绝对路径且存在,直接返回
+    if p.is_absolute() and p.exists():
+        return p
+
+    # 去搜索目录里找 (通常传入 [CHECKPOINTS_DIR, PRETRAINED_MODELS_DIR])
+    if search_dirs:
+        for d in search_dirs:
+            candidate = d / p.name
+            if candidate.exists():
+                return candidate
+
+    # 找不到就原样返回,交给 ultralytics 下载处理
+    return p

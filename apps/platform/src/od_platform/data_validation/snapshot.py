@@ -143,7 +143,12 @@ def build_snapshot(yaml_path: Path, task_type: str | None = None) -> DatasetSnap
 
     snap.data_root = _resolve_data_root(yaml_path, data)
     nc = data.get("nc")
-    snap.nc = nc if isinstance(nc, int) else None
+    if isinstance(nc, int):
+        snap.nc = nc
+    elif snap.class_names:
+        snap.nc = len(snap.class_names)
+    else:
+        snap.nc = None
     snap.class_names = _normalize_names(data.get("names"))
 
     odp_meta = data.get("odp_meta") or {}
